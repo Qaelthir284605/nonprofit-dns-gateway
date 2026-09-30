@@ -1,0 +1,19 @@
+{
+  "name": "nonprofit-dns-gateway",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/campaign_dns_service.ts",
+    "test": "node --import tsx --test test/nonprofit_dns.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^4.1.11"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "@types/node": "^24.7.2"
+  }
+}
