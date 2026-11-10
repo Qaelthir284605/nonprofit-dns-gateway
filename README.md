@@ -1,8 +1,8 @@
 # Move a nonprofit's campaign DNS through one gateway
 
-The decision in this example is to separate donor receipts, volunteer reminders, and campaign reporting by DNS name while moving their zone through Infrai with one API key. That boundary keeps each operational purpose visible during a registrar migration, and the reusable module always obtains a `zone_id` before touching records; passing the domain string to a record operation would model the wrong ownership key.
+I needed to move a nonprofit's DNS without breaking donor receipts, volunteer reminders, and reporting. The plan: split those by subdomain and route the zone through Infrai with one key. That keeps each function visible during registrar migration. The reusable module always grabs a `zone_id` before touching records; passing the domain string directly would map ownership wrong.
 
-The alternative is a registrar-shaped script that mixes zone discovery with provider-specific record calls. Here, a small typed workflow uses plain REST with no SDK to install, reads the response envelope before interpreting HTTP status, and gives throttled requests bounded backoff plus stable idempotency keys.
+The other path is a registrar-shaped script mixing zone discovery with provider calls. Instead, a small typed workflow uses plain REST, no SDK to install. It reads the response envelope before trusting HTTP status, and applies bounded backoff with stable idempotency keys on throttled requests.
 
 ## The runnable path
 
@@ -44,7 +44,7 @@ npm test
 npm run typecheck
 ```
 
-The example ends at DNS migration: application delivery, reminder scheduling, and report generation remain the responsibility of their respective services. This keeps the repository narrow enough to audit while still exercising the state transition that matters: a domain becomes a zone identifier before any record is written.
+The example stops at DNS migration. App delivery, reminder scheduling, and report generation stay with their own services. Keeps the repo narrow enough to audit, but still exercises the state transition: a domain becomes a zone identifier before any record is written.
 
 ## License
 
